@@ -1,14 +1,15 @@
 "use client"
 
+import { useParams } from "next/navigation"
 import StreamPage from "../../../pages/stream-page"
 
-interface StreamPageProps {
-  params: Promise<{ id: string }>
-}
+export default function Stream() {
+  const params = useParams()
+  const memberId = params?.id ? Number.parseInt(params.id as string) : null
 
-export default async function Stream({ params }: StreamPageProps) {
-  const { id } = await params
-  const memberId = Number.parseInt(id)
+  if (!memberId) {
+    return <div>Invalid member ID</div>
+  }
 
   return <StreamPage memberId={memberId} />
 }

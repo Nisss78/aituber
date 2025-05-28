@@ -1,14 +1,15 @@
 "use client"
 
+import { useParams } from "next/navigation"
 import ViewerPage from "../../../pages/viewer-page"
 
-interface WatchPageProps {
-  params: Promise<{ id: string }>
-}
+export default function Watch() {
+  const params = useParams()
+  const memberId = params?.id ? Number.parseInt(params.id as string) : null
 
-export default async function Watch({ params }: WatchPageProps) {
-  const { id } = await params
-  const memberId = Number.parseInt(id)
+  if (!memberId) {
+    return <div>Invalid member ID</div>
+  }
 
   return <ViewerPage memberId={memberId} />
 }
